@@ -45,19 +45,6 @@ sudo sed -i 's/^# *deb /deb /' /etc/apt/sources.list
 sudo apt update
 
 # --------------------------------------------------
-# Instalar dependencias de Packet Tracer
-# --------------------------------------------------
-
-echo
-echo "----------------------------------"
-echo "  Instalando dependencias..."
-echo "----------------------------------"
-
-sudo apt install -y \
-    libgl1-mesa-glx \
-    libxcb-xinerama0-dev
-
-# --------------------------------------------------
 # Descargar Cisco Packet Tracer 9.0
 # --------------------------------------------------
 
@@ -125,6 +112,40 @@ sudo apt --fix-broken install -y
 sudo dpkg --configure -a
 
 # --------------------------------------------------
+# Descargar icono de Packet Tracer
+# --------------------------------------------------
+
+echo
+echo "----------------------------------"
+echo "  Instalando icono de Packet Tracer..."
+echo "----------------------------------"
+
+ICON_URL="https://raw.githubusercontent.com/pauchiner/cisco-packet-tracer-script-test/refs/heads/main/pkt.png"
+ICON_DIR="/opt/pt/art"
+ICON_FILE="$ICON_DIR/app.png"
+
+sudo mkdir -p "$ICON_DIR"
+
+if [ -f "$ICON_FILE" ]; then
+    echo "El icono ya existe:"
+    echo "  $ICON_FILE"
+else
+    echo "Descargando icono..."
+    sudo wget --show-progress -O "$ICON_FILE" "$ICON_URL"
+fi
+
+if [ ! -s "$ICON_FILE" ]; then
+    echo
+    echo "ERROR: No se ha podido descargar el icono."
+    exit 1
+fi
+
+sudo chmod 644 "$ICON_FILE"
+
+echo "Icono instalado correctamente:"
+echo "  $ICON_FILE"
+
+# --------------------------------------------------
 # Crear acceso directo
 # --------------------------------------------------
 
@@ -135,7 +156,7 @@ echo "----------------------------------"
 
 sudo tee /usr/share/applications/packettracer.desktop > /dev/null <<'EOF'
 [Desktop Entry]
-Version=9.0
+Version=9.0.0
 Name=Cisco Packet Tracer
 Comment=Network Simulation Tool
 Exec=/usr/local/bin/packettracer

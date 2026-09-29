@@ -53,7 +53,7 @@ echo "----------------------------------"
 echo "  Descargando Packet Tracer 9.0..."
 echo "----------------------------------"
 
-DOWNLOAD_URL="https://archive.org/download/packettracer900/CiscoPacketTracer_900_Ubuntu_64bit.deb"
+DOWNLOAD_URL="https://github.com/andknownmaly/packettracer/releases/download/9.0.0/CiscoPacketTracer_900_Ubuntu_64bit.deb"
 
 DOWNLOAD_DIR="$HOME/packettracer-install"
 
